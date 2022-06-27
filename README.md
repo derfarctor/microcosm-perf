@@ -1,5 +1,5 @@
 # microcosm-perf
-A performance oriented implementation of the microcosm algorithm (with brute forcing) to aid in solving the microcosm puzzle. <br>See https://www.youtube.com/watch?v=HT-y6Bi5mSY to learn about the puzzle, and head over to r/solvingmicrocosm to join the discussion.
+A performance oriented implementation of the microcosm algorithm (with brute forcing) to aid in solving the microcosm puzzle.<br><br>See https://www.youtube.com/watch?v=HT-y6Bi5mSY to learn about the puzzle, and head over to [r/solvingmicrocosm](https://www.reddit.com/r/solvingmicrocosm/)  to join the discussion.
 
 ### Planned features
 - Interactive console application UI.
