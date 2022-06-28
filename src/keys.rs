@@ -18,7 +18,7 @@ pub const KEYS: [(&str, u8); 16] = [
     ("PPRBIMCYJVRLKVXPUUGF", 11),
 ];
 
-pub const NUMKEYS: [(&[u16], u8); 16] = [
+pub const NUMKEYS: [(&[u16], u16); 16] = [
     (
         &[
             69, 85, 74, 71, 90, 66, 66, 69, 73, 75, 85, 86, 81, 70, 81, 67, 71, 75, 78, 81,

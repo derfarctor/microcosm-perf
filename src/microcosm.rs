@@ -1,4 +1,4 @@
-use super::data::PRECALC_LETTERS;
+use crate::data::PRECALC_LETTERS;
 
 fn totals_from_lines(lines_and_key: [&[u16]; 14]) -> [u16; 20] {
     let mut totals = [0u16; 20];
@@ -16,9 +16,9 @@ fn totals_from_lines(lines_and_key: [&[u16]; 14]) -> [u16; 20] {
     totals
 }
 
-pub fn message_from_lines_and_key(lines: [&[u16]; 13], key: &[u16], offset: u8) -> String {
+pub fn message_from_lines_and_key(lines: [&[u16]; 13], key: &[u16], offset: u16) -> String {
     let mut lines_and_key: [&[u16]; 14] = [&[]; 14];
-    if offset != 1 {
+    if offset != 1 || offset != 0 {
     } else {
         for i in 0..13 {
             lines_and_key[i] = lines[i];

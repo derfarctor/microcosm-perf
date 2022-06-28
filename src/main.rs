@@ -1,13 +1,14 @@
 pub mod book;
 pub mod data;
-mod input;
+pub mod input;
 pub mod keys;
+mod compute;
 mod microcosm;
 
 use data::LOGO;
-use input::{get_keys, get_lines};
 use microcosm::message_from_lines_and_key;
 use std::io::{self, stdin, BufRead, Write};
+use compute::{start_manual, start_random};
 const OPTS: [&str; 2] = ["1", "2"];
 
 fn main() {
@@ -39,26 +40,9 @@ fn main() {
     }
 
     if choice.trim_end() == "1" {
-        compute_manual();
+        start_manual();
     } else if choice.trim_end() == "2" {
-        compute_random();
+        start_random();
     }
 }
 
-fn compute_manual() {
-    println!("\nPlease enter the lines you would like to test\nfor each poem. Use a space between each line\nnumber (e.g. 1 2 6 10) or just press enter if\nyou have no educated guesses.\n");
-    let mut lines: Vec<Vec<Vec<u16>>> = Vec::with_capacity(13);
-    for i in 0..13 {
-        lines.push(get_lines(i));
-    }
-    println!("\nPlease enter the keys you would like to test for.\nUse a space between each number, or enter L for a\nlist of possible keys, or just press enter if you\nhave no educated guesses.\n");
-    let (keys, offsets) = get_keys();
-    let mut lines_slice = [[0u16].as_slice(); 13];
-    for i in 0..13 {
-        lines_slice[i] = lines[i][0].as_slice();
-    }
-    let message = message_from_lines_and_key(lines_slice, &keys[0], offsets[0]);
-    println!("{}", message);
-}
-
-fn compute_random() {}
