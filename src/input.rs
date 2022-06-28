@@ -23,7 +23,7 @@ pub fn get_mode() -> String {
     }
 }
 
-pub fn get_lines(poem: usize) -> Vec<Vec<u16>> {
+pub fn get_lines(poem: usize) -> Vec<&'static [u16]> {
     print!("Lines from poem {}: ", poem + 1);
     io::stdout()
         .flush()
@@ -45,7 +45,33 @@ pub fn get_lines(poem: usize) -> Vec<Vec<u16>> {
     };
 }
 
-pub fn get_keys() -> Vec<Vec<u16>> {
+fn valid_lines(lines_input: String, poem: usize) -> Result<Vec<&'static [u16]>, &'static str> {
+    let lines_input_str = lines_input.trim_end();
+    let lines: Vec<&str> = lines_input_str.split_whitespace().collect();
+    let mut lines_as_vecs = Vec::new();
+    if lines_input_str == "" {
+        for i in 0..16 {
+            lines_as_vecs.push(NUMBOOK[poem][i]);
+        }
+    } else {
+        for line in lines {
+            let as_int = line.parse::<u16>();
+            if as_int.is_err() {
+                return Err("not all lines were integers.");
+            } else {
+                let line_int = as_int.unwrap();
+                if line_int < 1 || line_int > 16 {
+                    return Err("line number out of range. Must be 1 - 16.");
+                } else {
+                    lines_as_vecs.push(NUMBOOK[poem][line_int as usize - 1]);
+                }
+            }
+        }
+    }
+    Ok(lines_as_vecs)
+}
+
+pub fn get_keys() -> Vec<&'static [u16]> {
     print!("Key: ");
     io::stdout()
         .flush()
@@ -70,8 +96,7 @@ pub fn get_keys() -> Vec<Vec<u16>> {
         return get_keys();
     } else if keys_input_str == "" {
         for i in 0..16 {
-            let key_and_offset = [NUMKEYS[i].0, &[NUMKEYS[i].1]].concat();
-            keys_as_vecs.push(key_and_offset);
+            keys_as_vecs.push(&NUMKEYS[i][..]);
         }
     } else {
         for key in keys {
@@ -91,38 +116,11 @@ pub fn get_keys() -> Vec<Vec<u16>> {
                     );
                     return get_keys();
                 } else {
-                    let key_and_offset = [NUMKEYS[key_int as usize - 1].0, &[NUMKEYS[key_int as usize - 1].1]].concat();
-                    keys_as_vecs.push(key_and_offset);
+                    keys_as_vecs.push(&NUMKEYS[key_int as usize - 1][..]);
                 }
             }
         }
     }
     println!("");
     keys_as_vecs
-}
-
-fn valid_lines(lines_input: String, poem: usize) -> Result<Vec<Vec<u16>>, &'static str> {
-    let lines_input_str = lines_input.trim_end();
-    let lines: Vec<&str> = lines_input_str.split_whitespace().collect();
-    let mut lines_as_vecs = Vec::new();
-    if lines_input_str == "" {
-        for i in 0..16 {
-            lines_as_vecs.push(NUMBOOK[poem][i].to_vec());
-        }
-    } else {
-        for line in lines {
-            let as_int = line.parse::<u16>();
-            if as_int.is_err() {
-                return Err("not all lines were integers.");
-            } else {
-                let line_int = as_int.unwrap();
-                if line_int < 1 || line_int > 16 {
-                    return Err("line number out of range. Must be 1 - 16.");
-                } else {
-                    lines_as_vecs.push(NUMBOOK[poem][line_int as usize - 1].to_vec());
-                }
-            }
-        }
-    }
-    Ok(lines_as_vecs)
 }
