@@ -56,6 +56,10 @@ pub fn message_from_lines_and_key(lines_and_key: [&[u16]; 14], words: &WordList)
         }
     }
     // At this stage the message was fully english words, so generate it again and print the information
-    println!("\nAll words were english: {}", message);
+    println!(
+        "\n\nAll words were english: {}\nlines_and_key dump:\n{:?}\n",
+        message, lines_and_key
+    );
+
     true
 }

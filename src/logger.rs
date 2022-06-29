@@ -22,7 +22,7 @@ pub fn threaded_logger(
             "",
             percentage,
             per_second as u64,
-            width = 50
+            width = 80
         );
         thread::sleep(time::Duration::from_millis(1000));
         if *terminated.lock().unwrap() {
