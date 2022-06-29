@@ -4,11 +4,10 @@ pub mod data;
 pub mod input;
 pub mod keys;
 pub mod logger;
-mod microcosm;
+pub mod microcosm;
 
 use compute::{start_manual, start_random};
 use data::LOGO;
-use microcosm::message_from_lines_and_key;
 use std::io::{self, stdin, BufRead, Write};
 const OPTS: [&str; 2] = ["1", "2"];
 

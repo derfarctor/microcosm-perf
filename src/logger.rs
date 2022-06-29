@@ -5,10 +5,14 @@ use std::{thread, time};
 type Terminator = Arc<Mutex<bool>>;
 type CombinationsTested = Arc<AtomicUsize>;
 
-pub fn threaded_logger(log_mnemonics: CombinationsTested, terminated: Terminator, complexity: u64) {
+pub fn threaded_logger(
+    log_combinations: CombinationsTested,
+    terminated: Terminator,
+    complexity: u64,
+) {
     let start_time = time::Instant::now();
     loop {
-        let tested = log_mnemonics.load(atomic::Ordering::Relaxed);
+        let tested = log_combinations.load(atomic::Ordering::Relaxed);
         let percentage = 100. * (tested as f64 / complexity as f64);
         let runtime = start_time.elapsed();
         let per_second =
