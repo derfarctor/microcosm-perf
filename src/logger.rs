@@ -1,7 +1,7 @@
 use colour::e_green;
+use std::io::{stdout, Write};
 use std::sync::{atomic, atomic::AtomicUsize, Arc, Mutex};
 use std::{thread, time};
-
 type Terminator = Arc<Mutex<bool>>;
 type CombinationsTested = Arc<AtomicUsize>;
 
@@ -11,6 +11,7 @@ pub fn threaded_logger(
     complexity: u64,
 ) {
     let start_time = time::Instant::now();
+    thread::sleep(time::Duration::from_millis(5000));
     loop {
         let tested = log_combinations.load(atomic::Ordering::Relaxed);
         let percentage = 100. * (tested as f64 / complexity as f64);

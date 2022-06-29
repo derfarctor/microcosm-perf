@@ -2,9 +2,9 @@ use crate::data::PRECALC_LETTERS;
 use rustc_hash::FxHashMap;
 type WordList = Arc<FxHashMap<String, bool>>;
 use chrono;
-
+use colour::cyan_ln;
 use std::fs::{File, OpenOptions};
-use std::io::{BufWriter, Write};
+use std::io::{stdout, BufWriter, Write};
 use std::path::Path;
 use std::sync::Arc;
 
@@ -41,7 +41,8 @@ pub fn message_from_lines_and_key(lines_and_key: [&[u16]; 14], words: &WordList)
         return false;
     }
     // At this stage the message was fully english words, so generate it again and print the information
-    println!("\n\nFound text, written to found.txt: {}\n", message);
+    println!("\n");
+    cyan_ln!("| {} |\n", message);
     let f;
     if Path::new("found.txt").exists() {
         f = OpenOptions::new()
