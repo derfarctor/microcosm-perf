@@ -1,6 +1,4 @@
-use crate::book::NUMBOOK;
 use crate::data::PRECALC_LETTERS;
-use crate::keys::NUMKEYS;
 use rustc_hash::FxHashMap;
 type WordList = Arc<FxHashMap<String, bool>>;
 use chrono;

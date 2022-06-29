@@ -8,7 +8,7 @@ use std::{thread, time};
 type CombinationsTested = Arc<AtomicUsize>;
 use rustc_hash::FxHashMap;
 use std::fs::File;
-use std::io::{self, prelude::*, BufReader};
+use std::io::{prelude::*, BufReader};
 use std::process;
 
 type WordList = Arc<FxHashMap<String, bool>>;
@@ -34,7 +34,9 @@ pub fn start_manual() {
     }
 }
 
-pub fn start_random() {}
+pub fn start_random() {
+    println!("Feature not yet added. Sorry.");
+}
 
 fn get_complexity(combinations: &Vec<Vec<&[u16]>>) -> u64 {
     let mut complexity = 1u64;
@@ -201,7 +203,7 @@ fn compute_offset(
         .map(|x| x.iter())
         .multi_cartesian_product();
 
-    let mut offset = 0;
+    let mut offset;
     let mut lines_and_key: [&[u16]; 14] = [&[]; 14];
     for mut comb in comb_generator {
         offset = comb[13][20] as usize - 1;
