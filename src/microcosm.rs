@@ -4,7 +4,7 @@ type WordList = Arc<FxHashMap<String, bool>>;
 use chrono;
 use colour::cyan_ln;
 use std::fs::{File, OpenOptions};
-use std::io::{stdout, BufWriter, Write};
+use std::io::{BufWriter, Write};
 use std::path::Path;
 use std::sync::Arc;
 

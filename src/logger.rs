@@ -1,5 +1,4 @@
 use colour::e_green;
-use std::io::{stdout, Write};
 use std::sync::{atomic, atomic::AtomicUsize, Arc, Mutex};
 use std::{thread, time};
 type Terminator = Arc<Mutex<bool>>;
