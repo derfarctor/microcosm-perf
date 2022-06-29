@@ -98,6 +98,11 @@ pub fn get_keys() -> Vec<&'static [u16]> {
         for i in 0..16 {
             keys_as_vecs.push(&NUMKEYS[i][..]);
         }
+        let removed = keys_as_vecs.remove(10);
+        println!(
+            "Not checking for key {} since it was used to solve the first puzzle.",
+            KEYS[10].0
+        );
     } else {
         for key in keys {
             let as_int = key.parse::<u16>();

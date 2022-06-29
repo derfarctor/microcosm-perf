@@ -170,23 +170,24 @@ fn get_split_combinations(
 }
 
 fn compute(
-    combinations: Vec<Vec<&[u16]>>,
+    mut combinations: Vec<Vec<&[u16]>>,
     combinations_tested: CombinationsTested,
     words: WordList,
 ) {
+    for i in 0..combinations[13].len() {
+        combinations[13][i] = &combinations[13][i][..20];
+    }
     let comb_generator = combinations
         .iter()
         .map(|x| x.iter())
         .multi_cartesian_product();
-
+    let mut lines_and_key: [&[u16]; 14] = [&[]; 14];
     for comb in comb_generator {
-        combinations_tested.fetch_add(1, atomic::Ordering::Relaxed);
-        let mut lines_and_key: [&[u16]; 14] = [&[]; 14];
-        for i in 0..13 {
+        for i in 0..14 {
             lines_and_key[i] = comb[i];
         }
-        lines_and_key[13] = &comb[13][..20];
-        let message = message_from_lines_and_key(lines_and_key, &words);
+        message_from_lines_and_key(lines_and_key, &words);
+        combinations_tested.fetch_add(1, atomic::Ordering::Relaxed);
     }
 }
 
@@ -200,7 +201,19 @@ fn compute_offset(
         .map(|x| x.iter())
         .multi_cartesian_product();
 
-    for comb in comb_generator {
+    let mut offset = 0;
+    let mut lines_and_key: [&[u16]; 14] = [&[]; 14];
+    for mut comb in comb_generator {
+        offset = comb[13][20] as usize - 1;
+        let key = &comb[13][..20];
+        comb[13] = &key;
+        for i in 0..14 - offset {
+            lines_and_key[offset + i] = comb[i];
+        }
+        for i in 0..offset {
+            lines_and_key[i] = comb[14 - offset + i];
+        }
+        message_from_lines_and_key(lines_and_key, &words);
         combinations_tested.fetch_add(1, atomic::Ordering::Relaxed);
     }
 }

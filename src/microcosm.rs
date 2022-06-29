@@ -18,7 +18,7 @@ fn totals_from_lines(lines_and_key: [&[u16]; 14]) -> [u16; 20] {
     }
     totals
 }
-
+/*
 pub fn message_from_lines_and_key(lines_and_key: [&[u16]; 14], words: &WordList) -> bool {
     let totals = totals_from_lines(lines_and_key);
     let mut message = String::with_capacity(20);
@@ -37,6 +37,25 @@ pub fn message_from_lines_and_key(lines_and_key: [&[u16]; 14], words: &WordList)
     for i in 0..20 {
         message.push_str(PRECALC_LETTERS[totals[i] as usize]);
     }
-    println!("All words were english: {}", message);
+    println!("\nAll words were english: {}", message);
+    true
+}
+*/
+
+pub fn message_from_lines_and_key(lines_and_key: [&[u16]; 14], words: &WordList) -> bool {
+    let totals = totals_from_lines(lines_and_key);
+    let mut message = String::with_capacity(20);
+    let mut last = 0;
+    for i in 0..20 {
+        message.push_str(PRECALC_LETTERS[totals[i] as usize]);
+        if PRECALC_LETTERS[totals[i] as usize] == " " || i == 19 {
+            if !words.contains_key(&message[last..i]) {
+                return false;
+            }
+            last = i + 1;
+        }
+    }
+    // At this stage the message was fully english words, so generate it again and print the information
+    println!("\nAll words were english: {}", message);
     true
 }
