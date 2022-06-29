@@ -208,11 +208,21 @@ fn compute_offset(
         let key = &comb[13][..20];
         comb[13] = &key;
         for i in 0..14 - offset {
-            lines_and_key[offset + i] = comb[i];
+            lines_and_key[i] = comb[offset + i];
         }
         for i in 0..offset {
-            lines_and_key[i] = comb[14 - offset + i];
+            lines_and_key[14 - offset + i] = comb[i];
         }
+        /* DEBUG
+        println!("OLD (shift {})", offset + 1);
+        for line in comb {
+            println!("{:?}", line);
+        }
+        println!("NEW");
+        for line in lines_and_key {
+            println!("{:?}", line);
+        }
+        */
         message_from_lines_and_key(lines_and_key, &words);
         combinations_tested.fetch_add(1, atomic::Ordering::Relaxed);
     }
