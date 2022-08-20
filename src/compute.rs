@@ -67,6 +67,7 @@ fn begin_compute(combinations: Vec<Vec<&'static [u16]>>, use_offset: bool) {
     }
     let words: WordList = Arc::new(words_raw);
     println!("Loaded word list successfully.");
+    let num_cpus = num_cpus::get();
     let mut split_on = 0;
     let mut num_threads = 1;
     for i in 0..combinations.len() {
