@@ -71,6 +71,9 @@ fn begin_compute(combinations: Vec<Vec<&'static [u16]>>, use_offset: bool) {
     let mut split_on = 0;
     let mut num_threads = 1;
     for i in 0..combinations.len() {
+        if num_threads == 1 && combinations[split_on].len() > num_cpus {
+            split_on = i;
+        }
         if combinations[i].len() % num_cpus == 0 {
             split_on = i;
             num_threads = num_cpus;
@@ -79,8 +82,6 @@ fn begin_compute(combinations: Vec<Vec<&'static [u16]>>, use_offset: bool) {
             && combinations[i].len() < num_cpus
         {
             num_threads = combinations[i].len();
-            split_on = i;
-        } else if num_threads == 1 && combinations[split_on].len() > num_cpus {
             split_on = i;
         }
     }
